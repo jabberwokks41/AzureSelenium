@@ -1,0 +1,38 @@
+#Mainter : Promode
+version: '3.7'
+
+services:
+    progrid:
+        image: selenium/hub:3.141.59-vanadium
+        container_name: progrid
+        privileged: true
+        ports:
+            - "4444:4444"
+        environment:
+            - GRID_TIMEOUT=240000
+            - GRID_BROWSER_TIMEOUT=240000
+        networks:
+            - progrid_grid_internal
+        
+        
+        
+    nodechrome:
+        image: selenium/node-chrome-debug:3.141.59-vanadium
+        privileged: true
+        depends_on:
+            - progrid
+        ports:
+            - 5900
+        environment:
+            - no_proxy=localhost
+            - TZ=Europe/London
+            - HUB_HOST=progrid
+            - HUB_PORT=4444
+            - NODE_MAX_INSTANCES=1
+            - NODE_MAX_SESSION=10
+        networks:
+            - progrid_grid_internal
+        
+
+networks:
+    progrid_grid_internal:
