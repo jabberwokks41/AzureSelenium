@@ -4,9 +4,7 @@ USER seluser
 # Selenium Configuration
 #========================
 
-ENV PORT 8080
-ENV SSH_PORT 2222
-EXPOSE 2222 8080 4444
+EXPOSE 4444
 
 # As integer, maps to "maxSession"
 ENV GRID_MAX_SESSION 5
