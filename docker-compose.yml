@@ -13,26 +13,40 @@ services:
             - GRID_BROWSER_TIMEOUT=240000
         networks:
             - progrid_grid_internal
-        
-        
-        
-    nodechrome:
+               
+    nodechrome1:
         image: selenium/node-chrome-debug:3.141.59-vanadium
         privileged: true
         depends_on:
             - progrid
         ports:
-            - 5900
+            - "9001:5900"
         environment:
             - no_proxy=localhost
             - TZ=Europe/London
             - HUB_HOST=progrid
             - HUB_PORT=4444
-            - NODE_MAX_INSTANCES=1
+            - NODE_MAX_INSTANCES=10
             - NODE_MAX_SESSION=10
         networks:
             - progrid_grid_internal
-        
 
-networks:
-    progrid_grid_internal:
+    nodechrome2:
+        image: selenium/node-chrome-debug:3.141.59-vanadium
+        privileged: true
+        depends_on:
+            - progrid
+        ports:
+            - "9002:5900"
+        environment:
+            - no_proxy=localhost
+            - TZ=Europe/London
+            - HUB_HOST=progrid
+            - HUB_PORT=4444
+            - NODE_MAX_INSTANCES=10
+            - NODE_MAX_SESSION=10
+        networks:
+            - progrid_grid_internal
+
+networks: 
+    progrid_grid_internal: 
